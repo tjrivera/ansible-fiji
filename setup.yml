@@ -1,0 +1,11 @@
+---
+
+- hosts: servers
+  user: halogen
+  sudo: True
+  gather_facts: False
+
+  roles:
+    - common
+    - nginx
+    - owncloud

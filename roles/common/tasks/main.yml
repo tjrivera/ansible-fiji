@@ -1,0 +1,64 @@
+---
+# Defines tasks applicable across all machines in the infrastructure.
+
+- name: Install necessities and nice-to-haves
+  apt: pkg=$item state=installed
+  with_items:
+    - sudo
+    - vim
+    - htop
+    - iftop
+    - iotop
+    - mosh
+    - zsh
+    - git
+    - encfs
+    - libfuse-dev
+    - fuse-utils
+    - ruby1.9.3
+    - screen
+    - build-essential
+    - apticron
+    - update-notifier-common
+    - debian-goodies
+    - libpq-dev
+    - libmysqlclient-dev
+    - libxml2-dev
+    - libjpeg62
+    - libjpeg62-dev
+    - libfreetype6
+    - libfreetype6-dev
+    - zlib1g-dev
+    - python-dev
+    - python-setuptools
+    - python-imaging
+    - python-mysqldb
+    - python-psycopg2
+    - git-core
+
+- name: Install ntp
+  apt: pkg=ntp state=installed
+
+- name: Configure ntp
+  template: src=ntp.conf.j2 dest=/etc/ntp.conf
+  notify:
+    - restart ntp
+- name: install pip
+  action: easy_install name=pip
+
+- name: install various libraries with pip
+  action: pip name=$item state=present
+  with_items:
+    - virtualenv
+    - supervisor
+    - virtualenvwrapper
+    - uwsgi
+
+- name: Ensure ntpd is running and enabled
+  service: name=ntp state=running enabled=yes
+
+- include: ssl.yml tags=ssl
+- include: users.yml tags=users
+- include: ferm.yml tags=ferm
+- include: security.yml tags=security
+- include: dotfiles.yml tags=dotfiles

@@ -1,0 +1,20 @@
+---
+# Installs and configures latest nginx, the preferred web browser
+
+- name: Ensure repository key for Nginx is in place
+  apt_key: url=http://nginx.org/keys/nginx_signing.key state=present
+
+- name: Add NginX OpenSuSE repository
+  apt_repository: repo='deb http://nginx.org/packages/mainline/debian/ wheezy nginx'
+
+- name: Install Nginx
+  apt: pkg=nginx state=present update_cache=yes
+
+- name: Install FastCGI
+  apt: pkg=fcgiwrap state=present
+
+- name: remove default nginx site
+  action: file path=/etc/nginx/sites-enabled/default state=absent
+
+- name: write nginx.conf
+  action: template src=templates/nginx.conf dest=/etc/nginx/nginx.conf

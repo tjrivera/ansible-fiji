@@ -1,0 +1,5 @@
+# Install dotfiles maintained on github
+
+- name: Install dotfiles
+  action: git repo=https://github.com/tjrivera/dotfiles.git dest=/home/${main_user_name}/dotfiles remote=origin version=master
+

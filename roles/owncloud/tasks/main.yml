@@ -1,0 +1,13 @@
+
+
+- name: Install ownCloud dependencies
+  apt: pkg=python-software-properties
+
+- name: Ensure repository key for ownCloud is in place
+  apt_key: url=http://download.opensuse.org/repositories/isv:ownCloud:community/Debian_7.0/Release.key state=present
+
+- name: Add ownCloud OpenSuSE repository
+  apt_repository: repo='deb http://download.opensuse.org/repositories/isv:ownCloud:community/Debian_7.0/ /'
+
+- name: Install ownCloud from OpenSuSE repository
+  apt: pkg=owncloud update_cache=yes

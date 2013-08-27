@@ -1,0 +1,5 @@
+main_user_name: halogen
+admin_email: tyler.rivera@gmail.com
+dotfile_repo: https://github.com/tjrivera/dotfiles.git
+repo_remote: origin
+repo_version: master
